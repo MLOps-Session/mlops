@@ -6,24 +6,32 @@ import argparse
 from pkgutil import get_data
 from get_data import get_data, read_param
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+from sklearn.linear_model import ElasticNet
+import joblib
+import json
+import mlflow
+from urllib.parse import urlparse
 
-def split_data(config_path):
+def train_and_evaluate(config_path):
     config = read_param(config_path)
-    #df = get_data(config_path)
     train_data_path = config["split_data"]["train_path"]
     test_data_path = config["split_data"]["test_path"]
     raw_data_path = config["load_data"]["clean_data"]
     split_data = config["split_data"]["test_size"]
     random_state = config["base"]["random_state"]
     df = pd.read_csv(raw_data_path, sep=",")
+    model_dir = config["model_path"]
     
-    train,test = train_test_split(df, test_size = split_data, random_state = random_state)
-    train.to_csv(train_data_path, sep=",", index=False, encoding="utf-8")
-    test.to_csv(test_data_path, sep=",", index=False, encoding="utf-8")
-
+    alpha = config["estimators"]["ElasticNet"]["params"]["alpha"]
+    l1_ratio = config["estimators"]["ElasticNet"]["params"]["l1_ratio"]
+    
+    target = config["base"]["target_col"]
+    train = pd.read_csv(train_data_path)
+    test = pd.read_csv(test_data_path)
 
 if __name__=="__main__":
     args = argparse.ArgumentParser()
     args.add_argument("--config", default="params.yml")
     parsed_args = args.parse_args()
-    split_data(config_path = parsed_args.config)
+    train_and_evaluate(config_path = parsed_args.config)
