@@ -6,7 +6,7 @@ on:
 
 jobs:
     build_analyze_scan:
-        name: Build
+        name: Build, Analyze, Scan
         runs-on: ubuntu-latest    #[self-hosted]
         steps:
             - name: Checkout
@@ -23,10 +23,11 @@ jobs:
                   pip install -r requirements.txt
 
             - name: Docker Build and Push
+              env:
+                  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+                  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
               run: |
-                    docker-compose -f docker-compose.yaml build
-                    docker tag webapp:latest adityasarade/webapp:latest
-                    docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-                    docker push adityasarade/webapp:latest
-                env:
-                  DOCKER_CLI_ACI: 1
+                  docker-compose -f docker-compose.yaml build
+                  docker tag webapp:latest adityasarade/webapp:latest
+                  docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+                  docker push adityasarade/webapp:latest
