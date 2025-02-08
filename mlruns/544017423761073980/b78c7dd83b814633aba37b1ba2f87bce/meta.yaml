@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/544017423761073980/b78c7dd83b814633aba37b1ba2f87bce/artifacts
+end_time: 1738908662469
+entry_point_name: ''
+experiment_id: '544017423761073980'
+lifecycle_stage: active
+run_id: b78c7dd83b814633aba37b1ba2f87bce
+run_name: mlops
+run_uuid: b78c7dd83b814633aba37b1ba2f87bce
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1738908658005
+status: 4
+tags: []
+user_id: Aditya
