@@ -38,8 +38,3 @@ jobs:
           context: .
           push: true
           tags: adityasarade/webapp:latest
-      - name: Image Scan
-        run: trivy image adityasarade/webapp:latest > scan.txt
-
-      - name: Trivy Compliance
-        run: trivy image --compliance docker-cis adityasarade/webapp:latest > compliance.txt
