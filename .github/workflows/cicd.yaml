@@ -22,4 +22,11 @@ jobs:
                   python -m pip install --upgrade pip
                   pip install -r requirements.txt
 
-            
+            - name: Docker Build and Push
+              run: |
+                    docker-compose -f docker-compose.yaml build
+                    docker tag webapp:latest adityasarade/webapp:latest
+                    docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+                    docker push adityasarade/webapp:latest
+                env:
+                  DOCKER_CLI_ACI: 1
