@@ -40,6 +40,6 @@ jobs:
                   docker-compose -f docker-compose.yaml build
                   docker tag webapp:latest tanzeemrugrel/webapp:latest
                   docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-                  docker push tanzeemrugrel/webapp:latest
+                  docker push adityasarade/webapp:latest
               env:
                   DOCKER_CLI_ACI: 1
